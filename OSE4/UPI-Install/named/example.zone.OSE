@@ -1,0 +1,46 @@
+;
+$TTL 86400
+@       IN      SOA     example.com.  dns.example.com.  (
+                                2018072601      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+;       Define the nameservers and the mail servers
+
+        IN      NS      dns.example.com.
+
+        IN      A       192.168.10.20
+dns     IN      A       192.168.10.20
+nfs     IN      CNAME   dns
+lb      IN      CNAME   dns
+bastion IN      CNAME   dns
+
+ose-m1   IN      A       192.168.10.10
+ose-m2   IN      A       192.168.10.11
+ose-m3   IN      A       192.168.10.12
+ose-n1   IN      A       192.168.10.13
+ose-n2   IN      A       192.168.10.14
+ose-n3   IN      A       192.168.10.15
+master   IN      A       192.168.10.100
+*.cloudapps.example.com.    300 IN  A 192.168.10.101
+
+ose2-m1  IN      A       192.168.10.30
+ose2-i1  IN      A       192.168.10.31
+ose2-i2  IN      A       192.168.10.32
+ose2-n1  IN      A       192.168.10.33
+ose2-n2  IN      A       192.168.10.34
+ose2-n3  IN      A       192.168.10.35
+
+ose3-m1  IN      A       192.168.10.40
+ose3-i1  IN      A       192.168.10.41
+ose3-i2  IN      A       192.168.10.42
+ose3-n1  IN      A       192.168.10.43
+ose3-n2  IN      A       192.168.10.44
+ose3-n3  IN      A       192.168.10.45
+
+fed-cl1  IN      A       192.168.10.55
+fed-master1  IN      CNAME       fed-cl1
+fed-cl2  IN      A       192.168.10.66
+fed-master2  IN      CNAME       fed-cl2

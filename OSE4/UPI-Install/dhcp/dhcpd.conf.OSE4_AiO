@@ -1,0 +1,55 @@
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+#
+# dhcpd.conf
+#
+# Sample configuration file for ISC dhcpd
+#
+
+authoritative;
+default-lease-time 14400;
+max-lease-time 14400;
+allow booting;
+allow bootp;
+ 
+# option definitions common to all supported networks...
+# option domain-name         "ocp4.example.com";
+option domain-name         "ose4lp.com";
+option domain-search       "ose4lp.com","gls.ose4lp.com";
+option domain-name-servers 192.168.10.20;
+option subnet-mask         255.255.255.0;
+option broadcast-address   192.168.10.255;
+# Default GW inaczej nie ma netu
+option routers             192.168.10.1;
+
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+pool {
+       range 192.168.10.70 192.168.10.75;
+       # Statyczne adresy
+       host bootstrap { hardware ethernet 52:54:00:03:65:f0; fixed-address 192.168.10.75; }
+       host ose4-m0 { hardware ethernet 52:54:00:27:1a:c5; fixed-address 192.168.10.70; }
+       host ose4-m1 { hardware ethernet 52:54:00:d5:9f:60; fixed-address 192.168.10.71; }
+       host ose4-m2 { hardware ethernet 52:54:00:17:2f:38; fixed-address 192.168.10.72; }
+
+       host ose4-n1 { hardware ethernet 52:54:00:ea:c8:76; fixed-address 192.168.10.73; }
+       host ose4-n2 { hardware ethernet 52:54:00:5d:85:d7; fixed-address 192.168.10.74; }
+
+       # na potrzeby menu z TFTP filename "/tfptd/menu/boot.ipxe";
+       next-server 192.168.10.20;
+
+      if exists user-class and option user-class = "iPXE" {
+         # na potrzeby MatchBoxa
+         #filename "http://bastion.ose4lp.com:8080/boot.ipxe";
+         # na potrzeby httpd
+         filename "http://bastion.ose4lp.com:8080/media/boot.ipxe";
+      } else {
+        filename "undionly.kpxe";
+      }
+}
+}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: image-registry-pv
+spec:
+  accessModes: 
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /ose-nfs/volumeny/registry-aio.4.3.13
+    server: 192.168.10.20
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-registry

@@ -1,0 +1,4 @@
+ovirt_url: https://ovirt-manager.internal/ovirt-engine/api
+ovirt_username: przemyslaw.kuznicki@idm.lab.internal
+ovirt_password: Andr0m3d@
+ovirt_insecure: true

@@ -1,0 +1,9 @@
+./openshift-install --dir /root/OSE4.3/ose4.3-install/install-cl create ignition-configs
+./openshift-install --dir /root/OSE4.3/ose4.3-install/install-cl wait-for bootstrap-complete --log-level=debug
+./openshift-install --dir /root/OSE4.3/ose4.3-install/install-cl wait-for install-complete --log-level=debug
+export KUBECONFIG=/root/OSE4.3/ose4.3-install/install-cl/auth/kubeconfig
+
+### UWAGA!!!
+W pliku install-config.yaml zmienia się od 4.3.13 wartoś w sekcji Network:
+było: machineNetwork: OpenShiftSDN
+jest: networkType: OpenShiftSDN

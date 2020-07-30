@@ -1,0 +1,23 @@
+;
+$TTL 86400
+@       IN      SOA     ose4.przem.local.  dns.ose4.przem.local. (
+                                2020042801      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+10.168.192.in-addr.arpa.       IN      NS      dns.ose4.przem.local.
+20.10.168.192.in-addr.arpa.    IN      PTR     dns.ose4.przem.local.
+
+100.10.168.192.in-addr.arpa.   IN      PTR     api.gls.ose4.przem.local.
+100.10.168.192.in-addr.arpa.   IN      PTR     api-int.gls.ose4.przem.local.
+
+70.10.168.192.in-addr.arpa.    IN      PTR     ose4-m0.gls.ose4.przem.local.
+71.10.168.192.in-addr.arpa.    IN      PTR     ose4-m1.gls.ose4.przem.local.
+72.10.168.192.in-addr.arpa.    IN      PTR     ose4-m2.gls.ose4.przem.local.
+
+73.10.168.192.in-addr.arpa.    IN      PTR     ose4-n1.gls.ose4.przem.local.
+74.10.168.192.in-addr.arpa.    IN      PTR     ose4-n2.gls.ose4.przem.local.
+
+75.10.168.192.in-addr.arpa.    IN      PTR     bootstrap.gls.ose4.przem.local.

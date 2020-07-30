@@ -1,0 +1,8 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: link-example
+spec:
+  href: 'https://console-openshift-console.apps.ose4.pk.test/topology/ns/per-cicd/graph'
+  location: NamespaceDashboard
+  text: Developer view CI-CD

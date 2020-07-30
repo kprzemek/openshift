@@ -1,0 +1,67 @@
+git add .
+git status
+git commit -m 'Modyfikacja konfiguracja.txt'
+git push origin master
+
+---------
+
+Git global setup
+-----------------
+
+git config --global user.name "Przemysław Kuźnicki"
+git config --global user.email "przemyslaw.kuznicki@linuxpolska.pl"
+
+Create a new repository
+-----------------------
+
+git clone https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+cd cicd-tasks-app
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+Push an existing folder
+-----------------------
+
+cd existing_folder
+git init
+[ git remote remove origin ]
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+Push an existing Git repository
+--------------------------------
+
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git push -u origin --all
+git push -u origin --tags
+
+REPO i wszystkie BRANCHES
+git clone https://github.com/OpenShiftDemos/openshift-tasks.git
+cd openshift-tasks/
+git fetch origin
+git branch -a
+git checkout -b eap-7 origin/eap-7
+git init
+git remote remove origin
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git commit -m "Initial commit"
+git push --all origin
+
+Deploy TOKEN
+------------
+W projekcie -> settings->repository wybieramy Deploy Toekn i wypelniamy formatke
+
+Deploy tokens allow access to packages, your repository, and registry images.
+Your New Deploy Token
+Use this username as a login: przemyslaw.kuznicki
+Use this token as a password: ZGNviZ7ivesfHMN83tYW
+
+Allows read-only access to the registry images,
+Allows read access to the package registry
+

@@ -1,0 +1,218 @@
+LAB INFRA:
+----------
+https://idm.lab.internal/ipa/ui/
+https://dostep-lab.mgmt/index.php
+https://cloud.redhat.com/openshift/
+
+KOMENDA OC nie podpowiada TABem:
+--------------------------------
+instalując ją z TGZ nie generuje sie completion dla komendy OC. Trzeba zrobić to ręcznie:
+https://access.redhat.com/solutions/3189282
+i przelogować się lub:
+source /etc/bash_completion.d/oc_completion
+i działa :-D
+
+
+OSE 4.3
+-------
+Bootstrap: 52:54:00:03:65:f0
+Master1: 52:54:00:27:1a:c5
+Master2: 52:54:00:d5:9f:60
+Master3: 52:54:00:17:2f:38
+Node1: 52:54:00:ea:c8:76
+Node2: 52:54:00:5d:85:d7
+
+ose4-m1  IN      A       192.168.10.70
+ose4-m2  IN      A       192.168.10.71
+ose4-m3  IN      A       192.168.10.72
+ose4-n1  IN      A       192.168.10.73
+ose4-n2  IN      A       192.168.10.74
+bootstrap  IN      A       192.168.10.75
+
+cat /usr/lib/systemd/system/tftp.service
+ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot
+
+UWAGA!!!
+--------
+W home/przem/.kube zmieniłem nazwę pliku config na config.ORG. 
+Stare nazwy klastrów przeszkadzały klientowi OC dla ose4.
+
+
+Konfiguracja MatchBox:
+----------------------
+https://github.com/poseidon/matchbox/releases
+https://blog.openshift.com/deploying-a-upi-environment-for-openshift-4-1-on-vms-and-bare-metal/
+
+Kopnfiguracja DHCPD:
+----------------------
+https://github.com/openshift-tigerteam/guides/blob/master/ocp4/ocp4-dhcpd.conf
+
+Konfiguracja HAPROXY:
+----------------------
+https://github.com/openshift-tigerteam/guides/blob/master/ocp4/ocp4-haproxy.cfg
+
+Konfiguracja DNS:
+---------------------
+https://github.com/openshift-tigerteam/guides/blob/master/ocp4/ocp4-zonefile.db
+https://github.com/openshift-tigerteam/guides/tree/master/ocp4
+
+Instalacja AiO ;-)
+------------------
+https://blog.openshift.com/revamped-openshift-all-in-one-aio-for-labs-and-fun/
+Działa ten WPIS w GIT'a:
+https://gist.github.com/williamcaban/7d4fa16c91cf597517e5778428e74658
+Poprawnie patch'uje etcd-quorum-guard
+
+UWAGA!!!
+  W Konfiguracji DNS nie może być 3 wpisów dla etcd bo inaczej szuka zawsze trech!
+  Z jednym wpisem działa idealnie dla jednego noda.
+  
+
+1) odpaliś wszystkie serwisy: tftp, dhcp, matchbox
+2) dodać klucz do agenta ssh
+eval "$(ssh-agent -s)"
+ssh-add /root/.ssh/id_rsa
+3) podmienić PTR zony na odpowiednią (example-PTR lub OSE4LP-PTR)
+4) podmieniź konfig haproxy na odpowiedni (OSE3 lub OSE4)
+5) zabootować bootstrap'a i jak wystartuje patrzeć w jego logi: journalctl
+   a) jak napisze, że czeka na etcd klaster to bootować mastery
+   b) sprawdzić jakie daty są w certyfikacie wysatwianym przez bootstrap:
+     echo | openssl s_client -connect api-int.gls.ose4lp.com:6443 | openssl x509 -noout -text
+     echo | openssl s_client -connect api-int.gls.ose4.przem.local:6443 | openssl x509 -noout -text
+     echo | openssl s_client -connect api-int.ose4.pk.test:6443 | openssl x509 -noout -text
+   c) jego certy w /var/lib/kubelet/pki (są OK):
+     openssl x509 -in kubelet.crt -noout -text
+   d) na masterze: journalctl -u kubelet -u crio
+6) DODAWANIE Workerów:
+   https://access.redhat.com/solutions/4246261
+   https://docs.openshift.com/container-platform/4.3/installing/installing_bare_metal/installing-bare-metal.html#installation-approve-csrs_installing-bare-metal
+   
+   Przy instalacji gdzie Compute Node są osobno nie na masterach trzeba po utworzeniu klastra z 3 mastrów (wyłączeniu bootstrapa) odpalić workery i:
+   a) zalogować się do klastra zmienną KUBECONFIG
+   b) sprawdzić czy nody wystawiły requesty do podpisania, że sie chcą przyłączyć:
+      oc get csr
+      jeśli sa jakieś PENDING to trzeba je podpisać!!!
+      oc adm certificate approve <nazwa CSR'a>
+      lub od razu wszystkie oczekujące:
+      oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
+      
+   c) workery zaczną pobierać PODy i się dołączać do klastra
+  UWAGA!!!
+    W wersji do OSE 4.2 trzeba dodać workewry w ciągu 24h. Od OSE 4.3 mamy na to miesiąc ;-)
+7) sprawdzenie dostępów do OperatorHUB:
+    oc get opsrc --all-namespaces
+    
+
+LOGOWANIE przez kubeconfig do klastra:
+--------------------------------------
+export KUBECONFIG=/root/OSE4.3/ose4.3-install/install-cl/auth/kubeconfig
+./oc get nodes
+
+Override:
+---------
+1) wyświetlenie
+./oc get clusterversion -o json|jq .items[0].spec.overrides
+2) wywalenie overridów:
+./oc edit clusterversion i wywalić sekcje override ;-)
+
+
+UWAGA!!!
+ postawiony Control Plane musi chodzić powyżej jednego dnia, by certy się przeinstalowały na takie z ważnościa 1mc. Bez tego są ważne po instalacji tylko 1 dzień.
+ https://bugzilla.redhat.com/show_bug.cgi?id=1693951 ( Praveen Kumar 2019-04-02 05:47:31 UTC )
+ Ze strony DELL:
+ Note: Ignition configuration-driven installation generates security certificates that expire after 24 hours. The cluster must be completely installed before the certificates expire. The cluster must operate in a viable (nondegraded) state so that the first certificate rotation can be completed.
+ 
+ Ratunek z problemu CP stare certry: https://docs.openshift.com/container-platform/4.3/backup_and_restore/disaster_recovery/scenario-3-expired-certs.html
+
+Delete klaster:
+---------------
+https://access.redhat.com/articles/4397891
+
+ssh core@192.168.10.xx
+
+./openshift-install --dir=<installation_directory> wait-for bootstrap-complete \ 
+    --log-level=info/debud
+./openshift-install --dir=<installation_directory> wait-for install-complete
+
+./openshift-install --dir=<installation_directory> destroy cluster --log-level=debug
+
+
+PV dla registry:
+----------------
+W katalogu: /laby/DOCKER/OSE-4.3 są pliku PV i PVC dla registry.
+Na maszynie DNS-NFS jest wyeksportowany katalog repository-aio
+Export musi być ze specjalnymi ustawieniemi:
+/mnt/data *(rw,sync,no_wdelay,no_root_squash,insecure,fsid=0)
+ja mam:
+/ose-nfs/volumeny/registry-aio 192.168.10.0/24(rw,sync,no_wdelay,all_squash)
+exportfs -a
+exportfs -rv
+
+Registry jest standardowo WYWALONE po instalacji. Trzeba je włączyć:
+1) robimy jak w przykładzie dla vSphere:
+https://docs.openshift.com/container-platform/4.3/registry/configuring_registry_storage/configuring-registry-storage-vsphere.html
+i trochę tu
+https://docs.openshift.com/container-platform/4.3/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html
+
+Wszystko w projecie: openshift-image-registry <<<<<===========
+
+2)./oc edit configs.imageregistry.operator.openshift.io
+    oc edit configs.imageregistry.operator.openshift.io -o yaml
+Podmieniamy parametr: 
+managementState: Managed (było Removed)
+
+3) patch default router:
+./oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
+
+4) tworzymy PV i PVC z moich plików yaml
+5) edytujemy operator i wstawiamy PVC Claima:
+  storage:
+    pvc:
+      claim: image-registry-pvc
+a) można też ustawić na EmptyDir, ale to lipa ;-)
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+
+Logowanie do klastra:
+---------------------
+https://docs.openshift.com/container-platform/4.3/authentication/identity_providers/configuring-htpasswd-identity-provider.html#identity-provider-creating-htpasswd-secret_configuring-htpasswd-identity-provider
+oc create secret generic htpass-secret --from-file=htpasswd=/path/to/htpasswd -n openshift-config
+oc apply -f htpasswd_CustomResource.yaml
+
+oc adm policy add-cluster-role-to-user cluster-admin admin
+
+oc login -u przem -p przem https://api.gls.ose4.przem.local:6443
+
+Sprawdzenie jaki provider jest ustawiony (edycja):
+oc describe oauth.config.openshift.io/cluster
+
+Jak coś zmienimy, to w projekcie:openshift-authentication warto patrzeć w logi pierwszego z PODów (po restarcie - starszego). Tam jest info o logowaniu
+
+
+NEXUS:
+------
+https://help.sonatype.com/repomanager3/security/users
+NEXUSy od 3.17 nie maja default pass: admin123. Teraz haslo jest w kontenerze w pliku: admin.password file found in the $data-dir
+Ten katalog domyślnie jest w /nexus-data
+
+Image pruning:
+---------------
+    Automatic image pruning is not enabled. Regular pruning of images no longer referenced by ImageStreams is strongly recommended to ensure your cluster remains healthy. To remove this warning, install the image pruner by creating an imagepruner.imageregistry.operator.openshift.io resource with the name `cluster`. Ensure that the `suspend` field is set to `false`. 
+    
+    https://docs.openshift.com/container-platform/4.4/applications/pruning-objects.html
+
+etcd backend performance requirements:
+---------------------------------------
+https://access.redhat.com/solutions/4770281
+
+ETCD backup and restore (wymiana mastera):
+------------------------------------------
+https://docs.openshift.com/container-platform/4.4/backup_and_restore/replacing-unhealthy-etcd-member.html
+
+RHEV Install:
+-------------
+curl -k -u przemyslaw.kuznicki@idm.lab.internal:Andr0m3d@ https://ovirt-manager.internal/ovirt-engine/api
+oc scale --replicas=2 machineset rhvose-jxnt4-worker-0
+
+FIREWALL:
+---------
+https://docs.openshift.com/container-platform/4.4/installing/install_config/configuring-firewall.html#configuring-firewall_configuring-firewall

@@ -1,0 +1,128 @@
+#---------------------------------------------------------------------
+# Example configuration for a possible web application.  See the
+# full configuration options online.
+#
+#   http://haproxy.1wt.eu/download/1.4/doc/configuration.txt
+#
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+# Global settings
+#---------------------------------------------------------------------
+global
+    # to have these messages end up in /var/log/haproxy.log you will
+    # need to:
+    #
+    # 1) configure syslog to accept network log events.  This is done
+    #    by adding the '-r' option to the SYSLOGD_OPTIONS in
+    #    /etc/sysconfig/syslog
+    #
+    # 2) configure local2 events to go to the /var/log/haproxy.log
+    #   file. A line like the following can be added to
+    #   /etc/sysconfig/syslog
+    #
+    #    local2.*                       /var/log/haproxy.log
+    #
+    log         127.0.0.1 local2
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 20s
+    timeout check           10s
+    maxconn                 3000
+    errorfile 400 /usr/share/haproxy/400.http
+    errorfile 403 /usr/share/haproxy/403.http
+    errorfile 408 /usr/share/haproxy/408.http
+    errorfile 500 /usr/share/haproxy/500.http
+    errorfile 502 /usr/share/haproxy/502.http
+    errorfile 503 /usr/share/haproxy/503.http
+    errorfile 504 /usr/share/haproxy/504.http
+
+listen stats
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+    monitor-uri /healthz
+#---------------------------------------------------------------------
+# main frontend which proxys to the backends
+#---------------------------------------------------------------------
+frontend kubernetes-api
+    bind 10.11.20.100:6443
+    default_backend kubernetes-api
+    mode tcp
+    option tcplog
+
+backend kubernetes-api
+    balance source
+    mode tcp
+    server bootstrap 10.11.20.75:6443 check
+    server ose4-m0 10.11.20.70:6443 check
+    server ose4-m1 10.11.20.71:6443 check
+    server ose4-m2 10.11.20.72:6443 check
+
+frontend machine-config
+    bind 10.11.20.100:22623
+    default_backend machine-config
+    mode tcp
+    option tcplog
+
+backend machine-config
+    balance source
+    mode tcp
+    server bootstrap 10.11.20.75:22623 check
+    server ose4-m0 10.11.20.70:22623 check
+    server ose4-m1 10.11.20.71:22623 check
+    server ose4-m2 10.11.20.72:22623 check
+
+frontend apps.http
+    bind 10.11.20.101:80
+    default_backend apps.http
+    mode tcp
+    option tcplog
+
+backend apps.http
+    balance source
+    mode tcp
+    server ose4-m0 10.11.20.70:80 check
+    server ose4-m1 10.11.20.71:80 check
+    server ose4-m2 10.11.20.72:80 check
+
+frontend apps.https
+    bind 10.11.20.101:443
+    default_backend apps.https
+    mode tcp
+    option tcplog
+
+backend apps.https
+    balance source
+    mode tcp
+    server ose4-m0 10.11.20.70:443 check
+    server ose4-m1 10.11.20.71:443 check
+    server ose4-m2 10.11.20.72:443 check

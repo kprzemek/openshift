@@ -1,0 +1,20 @@
+;
+$TTL 86400
+@       IN      SOA     lptest.com.  dns.lptest.com. (
+                                2019120401      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+10.168.192.in-addr.arpa.       IN      NS      dns.lptest.com.
+20.10.168.192.in-addr.arpa.    IN      PTR     dns.lptest.com.
+
+100.10.168.192.in-addr.arpa.   IN      PTR     master.lptest.com.
+
+40.10.168.192.in-addr.arpa.    IN      PTR     ose3-m1.lptest.com.
+41.10.168.192.in-addr.arpa.    IN      PTR     ose3-i1.lptest.com.
+42.10.168.192.in-addr.arpa.    IN      PTR     ose3-i2.lptest.com.
+43.10.168.192.in-addr.arpa.    IN      PTR     ose3-n1.lptest.com.
+44.10.168.192.in-addr.arpa.    IN      PTR     ose3-n2.lptest.com.
+45.10.168.192.in-addr.arpa.    IN      PTR     ose3-n3.lptest.com.

@@ -1,0 +1,65 @@
+# Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     20000
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+#    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 20000
+
+listen stats
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+
+frontend  app.cloudapps.moje
+    bind 192.168.10.101:80
+    default_backend app.cloudapps.moje
+    mode tcp
+    option tcplog
+
+frontend  app.cloudapps.moje.ssl
+    bind 192.168.10.101:443
+    default_backend app.cloudapps.moje.ssl
+    mode tcp
+    option tcplog
+
+backend app.cloudapps.moje
+    balance roundrobin
+    mode tcp
+    server      fed1 192.168.10.55:80 check
+    server      fed2 192.168.10.66:80 check
+
+backend app.cloudapps.moje.ssl
+    balance roundrobin
+    mode tcp
+    server      fed1 192.168.10.55:443 check
+    server      fed2 192.168.10.66:443 check

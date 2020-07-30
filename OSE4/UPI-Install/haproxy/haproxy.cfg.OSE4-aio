@@ -1,0 +1,92 @@
+# Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     20000
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+    # utilize system-wide crypto-policies
+    ssl-default-bind-ciphers PROFILE=SYSTEM
+    ssl-default-server-ciphers PROFILE=SYSTEM
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+#    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 20s
+    timeout check           10s
+    maxconn                 3000
+
+listen stats
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+    monitor-uri /healthz
+
+frontend kubernetes-api
+    bind 192.168.10.100:6443
+    default_backend kubernetes-api
+    mode tcp
+    option tcplog
+
+backend kubernetes-api
+    balance source
+    mode tcp
+    server bootstrap 192.168.10.75:6443 check
+    server ose4-m0 192.168.10.70:6443 check
+
+frontend machine-config
+    bind 192.168.10.100:22623
+    default_backend machine-config
+    mode tcp
+    option tcplog
+
+backend machine-config
+    balance source
+    mode tcp
+    server bootstrap 192.168.10.75:22623 check
+    server ose4-m0 192.168.10.70:22623 check
+
+frontend apps.http
+    bind 192.168.10.101:80
+    default_backend apps.http
+    mode tcp
+    option tcplog
+
+backend apps.http
+    balance source
+    mode tcp
+    server ose4-m0 192.168.10.70:80 check
+
+frontend apps.https
+    bind 192.168.10.101:443
+    default_backend apps.https
+    mode tcp
+    option tcplog
+
+backend apps.https
+    balance source
+    mode tcp
+    server ose4-m0 192.168.10.70:443 check

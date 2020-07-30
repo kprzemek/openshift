@@ -1,0 +1,36 @@
+#!ipxe
+
+menu PXE Boot Options
+
+item bootstrap OSE4 Bootstrap Install
+item master OSE4 Master Install
+item worker OSE4 Worker Install
+item shell iPXE shell
+item localhdd Boot from local HDD
+item exit  Exit to BIOS
+
+choose --default localhdd --timeout 10000 option && goto ${option}
+
+:bootstrap
+kernel http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-kernel-x86_64 ip=dhcp rd.neednet=1 initrd=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=sda coreos.inst.image_url=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-metal.x86_64.raw.gz coreos.inst.ignition_url=http://10.11.20.20:8080/media/bootstrap.ign  
+initrd http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img
+boot
+
+:master
+kernel http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-kernel-x86_64 ip=dhcp rd.neednet=1 initrd=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=sda coreos.inst.image_url=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-metal.x86_64.raw.gz coreos.inst.ignition_url=http://10.11.20.20:8080/media/master.ign  
+initrd http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img
+boot
+
+:worker
+kernel http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-kernel-x86_64 ip=dhcp rd.neednet=1 initrd=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=sda coreos.inst.image_url=http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-metal.x86_64.raw.gz coreos.inst.ignition_url=http://10.11.20.20:8080/media/worker.ign  
+initrd http://10.11.20.20:8080/media/rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img
+boot
+
+:shell
+shell
+
+:localhdd
+sanboot --no-describe --drive 0x80 
+
+:exit
+exit

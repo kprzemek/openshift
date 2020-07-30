@@ -1,0 +1,27 @@
+;
+$TTL 86400
+@       IN      SOA     lptest.com.  dns.lptest.com.  (
+                                2019120309      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+;       Define the nameservers and the mail servers
+
+@       IN      NS      dns.lptest.com.
+@       IN      A       192.168.10.20
+dns     IN      A       192.168.10.20
+nfs     IN      CNAME   dns
+lb      IN      CNAME   dns
+bastion IN      CNAME   dns
+
+*.cloudapps.lptest.com.    300 IN  A 192.168.10.101
+
+master   IN      A       192.168.10.100
+ose3-m1  IN      A       192.168.10.40
+ose3-i1  IN      A       192.168.10.41
+ose3-i2  IN      A       192.168.10.42
+ose3-n1  IN      A       192.168.10.43
+ose3-n2  IN      A       192.168.10.44
+ose3-n3  IN      A       192.168.10.45

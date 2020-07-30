@@ -1,0 +1,36 @@
+;
+$TTL 86400
+@       IN      SOA     ose4.przem.local.  dns.ose4.przem.local.  (
+                                2020042901      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+;       Define the nameservers and the mail servers
+
+@       IN      NS      dns.ose4.przem.local.
+@       IN      A       192.168.10.20
+dns     IN      A       192.168.10.20
+nfs     IN      CNAME   dns
+lb      IN      CNAME   dns
+bastion IN      CNAME   dns
+services IN     CNAME   dns
+
+*.apps.gls.ose4.przem.local.    300 IN  A 192.168.10.101
+
+; master.gls  IN  A    192.168.10.100
+api.gls     IN  A      192.168.10.100
+api-int.gls IN  A      192.168.10.100
+
+ose4-m0.gls IN  A      192.168.10.70
+ose4-m1.gls IN  A      192.168.10.71
+ose4-m2.gls IN  A      192.168.10.72
+
+etcd-0.gls  IN  A      192.168.10.70
+etcd-1.gls  IN  A      192.168.10.71
+etcd-2.gls  IN  A      192.168.10.72
+
+bootstrap.gls IN  A    192.168.10.75
+
+_etcd-server-ssl._tcp.gls.ose4.przem.local.  86400 IN   SRV 0   10   2380 etcd-0.gls.ose4.przem.local.

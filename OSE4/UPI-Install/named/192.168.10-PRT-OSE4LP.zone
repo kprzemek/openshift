@@ -1,0 +1,22 @@
+;
+$TTL 86400
+@       IN      SOA     ose4lp.com.  dns.ose4lp.com. (
+                                2020022101      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+10.168.192.in-addr.arpa.       IN      NS      dns.ose4lp.com.
+20.10.168.192.in-addr.arpa.    IN      PTR     dns.ose4lp.com.
+
+100.10.168.192.in-addr.arpa.   IN      PTR     api.gls.ose4lp.com.
+100.10.168.192.in-addr.arpa.   IN      PTR     api-int.gls.ose4lp.com.
+
+70.10.168.192.in-addr.arpa.    IN      PTR     ose4-m0.gls.ose4lp.com.
+71.10.168.192.in-addr.arpa.    IN      PTR     ose4-m1.gls.ose4lp.com.
+72.10.168.192.in-addr.arpa.    IN      PTR     ose4-m2.gls.ose4lp.com.
+
+73.10.168.192.in-addr.arpa.    IN      PTR     ose4-n1.gls.ose4lp.com.
+74.10.168.192.in-addr.arpa.    IN      PTR     ose4-n2.gls.ose4lp.com.
+75.10.168.192.in-addr.arpa.    IN      PTR     bootstrap.gls.ose4lp.com.

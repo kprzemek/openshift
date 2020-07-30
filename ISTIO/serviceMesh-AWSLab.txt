@@ -1,0 +1,119 @@
+BigData master1  ocpsvr ocp311 -> certy file 
+Sprawdzić certy komendą od Kamila: openssl
+Snapshot in memory!!!
+
+
+oc project istio-operator 
+Now using project "istio-operator" on server "https://api.cluster-9fef.9fef.sandbox1596.opentlc.com:6443".
+[pk-linuxpolska.pl@clientvm 0 ~]$ oc get all
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/istio-node-2h7km                  1/1     Running   0          129m
+pod/istio-node-jgh8j                  1/1     Running   0          129m
+pod/istio-node-qr8cw                  1/1     Running   0          129m
+pod/istio-operator-568849cc4f-lfg66   1/1     Running   0          138m
+
+NAME                           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/admission-controller   ClusterIP   172.30.33.73   <none>        443/TCP   138m
+
+NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
+daemonset.apps/istio-node   3         3         3       3            3           beta.kubernetes.io/os=linux   129m
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/istio-operator   1/1     1            1           138m
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/istio-operator-568849cc4f   1         1         1       138m
+
+======
+oc project istio-system 
+Now using project "istio-system" on server "https://api.cluster-9fef.9fef.sandbox1596.opentlc.com:6443".
+[pk-linuxpolska.pl@clientvm 0 ~]$ oc get all
+NAME                                          READY   STATUS    RESTARTS   AGE
+pod/grafana-798f5c4695-k8bcx                  2/2     Running   0          126m
+pod/istio-citadel-749b5f749-zr9s8             1/1     Running   0          130m
+pod/istio-egressgateway-7467b4d5-hbbp6        1/1     Running   0          127m
+pod/istio-galley-87959d49b-wxlzl              1/1     Running   0          129m
+pod/istio-ingressgateway-6f69c9bd-qfnl9       1/1     Running   0          127m
+pod/istio-pilot-766fbd856-xtnjq               2/2     Running   0          128m
+pod/istio-policy-5bd4648bd9-lf25d             2/2     Running   0          129m
+pod/istio-sidecar-injector-75748d7d88-rsgf2   1/1     Running   0          127m
+pod/istio-telemetry-57d749b69-czmzm           2/2     Running   0          129m
+pod/jaeger-d744668bc-8ncrn                    2/2     Running   0          129m
+pod/kiali-64cd8b9bbc-jjhp8                    1/1     Running   0          6m28s
+pod/prometheus-7ddcc755fb-zvfqd               2/2     Running   0          129m
+
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                                  AGE
+service/grafana                     ClusterIP   172.30.229.219   <none>        3000/TCP                                 126m
+service/istio-citadel               ClusterIP   172.30.16.216    <none>        8060/TCP,15014/TCP                       130m
+service/istio-egressgateway         ClusterIP   172.30.159.251   <none>        80/TCP,443/TCP,15443/TCP                 127m
+service/istio-galley                ClusterIP   172.30.197.221   <none>        443/TCP,15014/TCP,9901/TCP               129m
+service/istio-ingressgateway        ClusterIP   172.30.113.155   <none>        15020/TCP,80/TCP,443/TCP,15443/TCP       127m
+service/istio-pilot                 ClusterIP   172.30.1.83      <none>        15010/TCP,15011/TCP,8080/TCP,15014/TCP   128m
+service/istio-policy                ClusterIP   172.30.180.103   <none>        9091/TCP,15004/TCP,15014/TCP             129m
+service/istio-sidecar-injector      ClusterIP   172.30.141.201   <none>        443/TCP                                  127m
+service/istio-telemetry             ClusterIP   172.30.227.71    <none>        9091/TCP,15004/TCP,15014/TCP,42422/TCP   129m
+service/jaeger-agent                ClusterIP   None             <none>        5775/UDP,5778/TCP,6831/UDP,6832/UDP      129m
+service/jaeger-collector            ClusterIP   172.30.235.211   <none>        9411/TCP,14250/TCP,14267/TCP,14268/TCP   129m
+service/jaeger-collector-headless   ClusterIP   None             <none>        9411/TCP,14250/TCP,14267/TCP,14268/TCP   129m
+service/jaeger-query                ClusterIP   172.30.158.100   <none>        443/TCP                                  129m
+service/kiali                       NodePort    172.30.191.52    <none>        20001:31026/TCP                          126m
+service/prometheus                  ClusterIP   172.30.37.47     <none>        9090/TCP                                 129m
+service/zipkin                      ClusterIP   172.30.73.249    <none>        9411/TCP                                 129m
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/grafana                  1/1     1            1           126m
+deployment.apps/istio-citadel            1/1     1            1           130m
+deployment.apps/istio-egressgateway      1/1     1            1           127m
+deployment.apps/istio-galley             1/1     1            1           129m
+deployment.apps/istio-ingressgateway     1/1     1            1           127m
+deployment.apps/istio-pilot              1/1     1            1           128m
+deployment.apps/istio-policy             1/1     1            1           129m
+deployment.apps/istio-sidecar-injector   1/1     1            1           127m
+deployment.apps/istio-telemetry          1/1     1            1           129m
+deployment.apps/jaeger                   1/1     1            1           129m
+deployment.apps/kiali                    1/1     1            1           126m
+deployment.apps/prometheus               1/1     1            1           129m
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/grafana-798f5c4695                  1         1         1       126m
+replicaset.apps/istio-citadel-749b5f749             1         1         1       130m
+replicaset.apps/istio-egressgateway-7467b4d5        1         1         1       127m
+replicaset.apps/istio-galley-87959d49b              1         1         1       129m
+replicaset.apps/istio-ingressgateway-6f69c9bd       1         1         1       127m
+replicaset.apps/istio-pilot-766fbd856               1         1         1       128m
+replicaset.apps/istio-policy-5bd4648bd9             1         1         1       129m
+replicaset.apps/istio-sidecar-injector-75748d7d88   1         1         1       127m
+replicaset.apps/istio-telemetry-57d749b69           1         1         1       129m
+replicaset.apps/jaeger-d744668bc                    1         1         1       129m
+replicaset.apps/kiali-64cd8b9bbc                    1         1         1       126m
+replicaset.apps/prometheus-7ddcc755fb               1         1         1       129m
+
+NAME                                            HOST/PORT                                                                          PATH   SERVICES               PORT    TERMINATION   WILDCARD
+route.route.openshift.io/grafana                grafana-istio-system.apps.cluster-9fef.9fef.sandbox1596.opentlc.com                       grafana                <all>   reencrypt     None
+route.route.openshift.io/istio-ingressgateway   istio-ingressgateway-istio-system.apps.cluster-9fef.9fef.sandbox1596.opentlc.com          istio-ingressgateway   8080                  None
+route.route.openshift.io/jaeger                 jaeger-istio-system.apps.cluster-9fef.9fef.sandbox1596.opentlc.com                        jaeger-query           <all>   reencrypt     None
+route.route.openshift.io/kiali                  kiali-istio-system.apps.cluster-9fef.9fef.sandbox1596.opentlc.com                         kiali                  <all>   reencrypt     None
+route.route.openshift.io/prometheus             prometheus-istio-system.apps.cluster-9fef.9fef.sandbox1596.opentlc.com                    prometheus             <all>   reencrypt     None
+
+=========
+oc project openshift-operators
+Now using project "openshift-operators" on server "https://api.cluster-9fef.9fef.sandbox1596.opentlc.com:6443".
+[pk-linuxpolska.pl@clientvm 0 ~]$ oc get all
+NAME                                          READY   STATUS    RESTARTS   AGE
+pod/elasticsearch-operator-57cbcc6565-7sjld   1/1     Running   0          178m
+pod/jaeger-operator-7b74cb9765-rhs6k          1/1     Running   0          176m
+pod/kiali-operator-69bffd8cd4-7nrst           2/2     Running   0          174m
+
+NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+service/jaeger-operator-metrics   ClusterIP   172.30.144.34   <none>        8383/TCP,8686/TCP   176m
+service/kiali-operator-metrics    ClusterIP   172.30.190.36   <none>        8686/TCP,8383/TCP   174m
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/elasticsearch-operator   1/1     1            1           178m
+deployment.apps/jaeger-operator          1/1     1            1           176m
+deployment.apps/kiali-operator           1/1     1            1           174m
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/elasticsearch-operator-57cbcc6565   1         1         1       178m
+replicaset.apps/jaeger-operator-7b74cb9765          1         1         1       176m
+replicaset.apps/kiali-operator-69bffd8cd4           1         1         1       174m

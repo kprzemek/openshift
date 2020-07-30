@@ -1,0 +1,674 @@
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git fetch --all
+ git pull --all
+git pull origin/eap-7
+git fetch origin
+git branch -a
+git checkout -b eap-7 origin/eap-7
+git remote update
+git pull --all
+git config --bool core.bare false
+git reset --hard
+cd ../
+ll
+rm -rf openshift-tasks.git
+cd demo
+mkdir demo
+ll
+cd deom
+cd demo
+ll
+git clone --mirror https://github.com/OpenShiftDemos/openshift-tasks.git .git
+ll
+ls -la
+git config --bool core.bare false
+git reset --hard
+git branch
+git branch -a
+ll
+git pull --all
+git fetch --all
+git branch -r | awk -F'origin/' '!/HEAD|master/{print $2 " " $1"origin/"$2}' | xargs -L 1 git branch -f --track
+git branch -a
+cd ../
+mv demo/ cicd-tasks-app
+cd cicd-
+cd cicd-tasks-app/
+ll
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git add .
+git commit -m "Initial commit"
+git push -u origin --all
+git push -u origin --mirror
+git reset --hard
+git remote -v
+git init 
+git remote -v
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+cd ../
+ll
+rm -rf cicd-tasks-app
+mkdir demo
+cd demo/
+git clone --mirror https://github.com/OpenShiftDemos/openshift-tasks.git .git
+git config --bool core.bare false
+git reset --hard
+git branch -r
+git branch -a
+git init 
+git remote -v
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git init 
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git push -u origin --all
+cd ../
+rm -rf demo/
+git clone https://github.com/OpenShiftDemos/openshift-tasks.git 
+ll
+cd openshift-tasks/
+ll
+git branch -a
+git fetch origin
+git branch -a
+git checkout -b eap-7 origin/eap-7
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git remote -v
+git init
+git remote -v
+git push --all origin
+vim .git/config 
+git push --all origin
+vim .git/config 
+git push --all origin
+vim .git/config 
+vim .git/description 
+vim .git/HEAD 
+vim .git/index 
+vim .git/info/exclude 
+vim .git/config 
+cd ../
+ll
+rm -rf openshift-tasks/
+git clone https://github.com/OpenShiftDemos/openshift-tasks.git 
+cd openshift-tasks/
+ll
+git init 
+git remote -v
+vim .git/config 
+git fetch origin
+git branch -a
+git checkout -b eap-7 origin/eap-7
+git remote -v
+vim .git/config 
+git remote -v
+git push --all origin
+cd ..
+mkdir demo
+cd demo/
+ll
+git clone --mirror https://github.com/OpenShiftDemos/openshift-tasks.git
+ll
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+cd openshift-tasks.git/
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+vim config 
+git push origin --mirror
+cd ../
+ll
+cd ../
+ll
+rm -rf openshift-tasks demo
+git clone https://github.com/OpenShiftDemos/openshift-tasks.git 
+cd openshift-tasks/
+git fetch origin
+git branch -a
+git checkout -b eap-7 origin/eap-7
+git init
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git remote remove origin
+git remote add origin https://gitlab.com/przemyslaw.kuznicki/cicd-tasks-app.git
+git add .
+git status
+git commit -m "Initial commit"
+git push --all origin
+ll
+cd ..
+ll
+mc
+oc get all
+oc logs -f pod/cicd-demo-installer-n8xkc
+oc get is -n openshift
+oc get is -n openshift|grep maven
+oc describe is jenkins-agent-maven-35-rhel7 -n openshift
+podman images
+podman run registry.access.redhat.com/openshift3/jenkins-agent-maven-35-rhel7:latest 
+podman run default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest 
+podman run default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest /bin/bash
+podman exec -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest /bin/bash
+podman exec -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest 
+podman exec /bin/bash -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest 
+podman exec -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest 
+podman exec -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest /bin/j
+podman exec -it registry.access.redhat.com/openshift3/jenkins-agent-maven-35-rhel7 /bin/bash
+podman run -it registry.access.redhat.com/openshift3/jenkins-agent-maven-35-rhel7 /bin/bash
+podman run -it default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest /bin/bash
+podman ps
+podman ps -a
+podma rm 0e197811598c 7650f0112efc da89213384c8 01f43efaec74 469f83da6f48
+podman rm 0e197811598c 7650f0112efc da89213384c8 01f43efaec74 469f83da6f48
+oc describe is jenkins-agent-maven-35-rhel7 -n openshift
+oc get is -n cicd
+ssh -i ~/.ssh/bastionKeyNoPass core@10.11.20.73
+ssh -i ~/.ssh/bastionKeyNoPass core@10.11.20.74
+podman images
+podman login -u $(oc whoami) -p $(oc whoami -t) --tls-verify=false $HOST 
+oc import-image openshift/jenkins-agent-maven-35-rhel7 --from=docker-registry.default.svc:5000/openshift/jenkins-agent-maven-35-rhel7:latest
+oc project
+oc import-image openshift/jenkins-agent-maven-35-rhel7 --from=docker-registry.default.svc:5000/openshift/jenkins-agent-maven-35-rhel7:latest --confirm
+podman images registry.redhat.io/openshift3/jenkins-agent-maven-35-rhel7
+podman push default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest 
+HOST=$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')
+podman login -u $(oc whoami) -p $(oc whoami -t) --tls-verify=false $HOST --tls-verify=false
+podman push default-route-openshift-image-registry.apps.ose4.pk.test/openshift/jenkins-agent-maven-35-rhel7:latest --tls-verify=false
+cd CI-CD/
+vim GIT.txt 
+cd cicd-jenkins/
+ll
+vim cicd-template.yaml 
+cd ../rh-demo/
+ll
+vim nexus3-template.yaml
+vim cicd-template-EPHEMERAL-withRH.yaml
+vim nexus3-template.yaml
+oc project cicd
+oc login -u admin https://api.ose4.pk.test:6443
+oc project cicd
+oc get all
+oc process -f https://raw.githubusercontent.com/OpenShiftDemos/nexus/master/nexus3-template.yaml|oc delete -f -
+oc new-app -f https://raw.githubusercontent.com/OpenShiftDemos/nexus/master/nexus3-template.yaml --param=NEXUS_VERSION=3.13.0 --param=MAX_MEMORY=2Gi
+oc label dc nexus "app.kubernetes.io/part-of"="nexus" --overwrite
+grep configuration/cicd-settings-nexus3.xml *
+vim cicd-template.yaml 
+grep >
+> Pzdr
+> Piotr
+>
+> Pozdrawiam/Regards,
+>
+>  
+>
+> Piotr Trando
+>
+> Dyrektor działu szkoleń
+>
+> tel. +48 519 130 150
+>
+> e-mail: piotr.trando@linuxpolska.pl
+grep cicd-settings-nexus3.xml *
+ll
+vim nexus3-template.yaml
+ll
+cd ../
+ll
+cd POKAZ-LP/
+ll
+cd CI-CD/cicd-jenkins/
+vim cicd-template.yaml 
+ll
+cd CI-CD/cicd-jenkins/
+ll
+oc process -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true|oc delete -f -
+oc login -u admin https://api.ose4.pk.test:6443
+oc process -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true|oc delete -f -
+./cicd-clear.sh 
+ll
+vim cicd-template.yaml 
+vim sonarqube/sonarqube-template-ephemeral.yaml 
+cat gitlab.txt 
+cat ../GIT.txt 
+git add .
+git status
+git commit -m "SonarQube 8.3.1"
+git push origin master
+oc new-app -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true
+oc get all
+oc project per-cicd
+oc get all
+oc logs -f pod/cicd-demo-installer-spdvs
+oc process -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true|oc delete -f -
+./cicd-clear.sh 
+vim cicd-template.yaml 
+vim sonarqube/sonarqube-template-ephemeral.yaml 
+git add .
+git status
+git commit -m "SonarQube powrot do 7.1.0"
+git push origin master
+oc new-app -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true
+vim konfiguracja.txt 
+oc get all
+oc logs -f pod/cicd-demo-installer-th4g9
+cd CI-CD/
+oc project
+oc login -u admin https://api.ose4.pk.test:6443
+oc project
+oc project jboss
+oc project jboss-dev 
+oc get all
+ll
+cd POKAZ-LP/
+ll
+cd CLUSTER-APP/
+ll
+oc project
+ll
+oc new-build --name=clusterapp -i jboss-eap70-openshift:1.7  
+oc new-build --name=clusterapp -i jboss-eap70-openshift:1.7 --strategy=source --binary
+oc get all
+oc start-build clusterapp --from-dir=. --follow=true --wait=true
+oc get all
+oc new-app --name=clusterapp --docker-image=default-route-openshift-image-registry.apps.ose4.pk.test/jboss-dev/clusterapp:latest --insecure-registry 
+oc get all
+oc new-app --name=clusterapp --docker-image=docker-registry.default.svc:5000/jboss-cluster/clusterapp:latest --insecure-registry 
+oc describe is clusterapp
+oc new-app --name=clusterapp --docker-image=image-registry.openshift-image-registry.svc:5000/jboss-dev/clusterapp --insecure-registry 
+oc get all
+oc expose svc/clusterapp
+oc get all
+oc get srv
+oc get service
+oc expose dc/clusterapp --port=8888 --name=eap-app-ping --cluster-id=None
+oc expose dc/clusterapp --port=8888 --name=eap-app-ping --cluster-ip=None
+oc get service
+oc set env dc/clusterapp JGROUPS_PING_PROTOCOL=openshift.DNS_PING -e OPENSHIFT_DNS_PING_SERVICE_NAME=eap-app-ping -e OPENSHIFT_DNS_PING_SERVICE_PORT=8888
+oc get all
+oc delete all --all
+oc get all
+oc project c
+oc project per-cicd 
+oc get all
+cd ../
+ll
+cd ../
+cd cicd-jenkins/
+ll
+oc process -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true|oc delete -f -
+./cicd-clear.sh 
+oc new-app -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true
+oc get all
+oc logs -f pod/cicd-demo-installer-r7p5x
+oc project super-mario 
+oc get all
+oc delete pod/mario-crossover-2-phwtz replicationcontroller/mario-crossover-1 replicationcontroller/mario-crossover-2 service/mario-crossover deploymentconfig.apps.openshift.io/mario-crossover route.route.openshift.io/mario-crossover
+oc get all
+oc get all --show-labels 
+oc get all
+oc get sa
+oc get all
+oc edit deploymentconfig.apps.openshift.io/mario-crossover
+oc project
+oc get all
+oc delete pod/mario-85996777d5-6kcfr pod/mario-crossover-2-deploy pod/mario-crossover-2-zqwjx replicationcontroller/mario-crossover-1 replicationcontroller/mario-crossover-2 service/mario service/mario-crossover deployment.apps/mario replicaset.apps/mario-85996777d5 deploymentconfig.apps.openshift.io/mario-crossover route.route.openshift.io/mario route.route.openshift.io/mario-crossover
+oc get all
+oc project jboss-dev 
+oc get all
+oc get all -n per-stage 
+ll
+vim cicd-template.yaml 
+cd ../rh-demo/
+ll
+vimdiff cicd-template-EPHEMERAL-withRH.yaml cicd-template.yaml
+vim cicd-template.yaml
+vim cicd-template-EPHEMERAL-withRH.yaml 
+oc new-app -n cicd -f cicd-template-EPHEMERAL-withRH.yaml --param DEV_PROJECT=dev --param STAGE_PROJECT=stage --param EPHEMERAL=true
+oc get all
+oc project cicd
+oc get all
+oc logs -f pod/cicd-demo-installer-r246l
+oc get all
+oc logs -f pod/cicd-demo-installer-7lwjc
+oc get all
+oc delete pod/cicd-demo-installer-2w8d6
+oc get all
+oc get pod
+oc delete pod/cicd-demo-installer-9s28j
+oc get pod
+oc logs -f cicd-demo-installer-cvqqc
+oc get pod
+oc get all|grep cicd-demo
+oc delete job.batch/cicd-demo-installer
+oc get all|grep cicd-demo
+oc get pod
+oc delete jenkins-3-deploy nexus-1-deploy nexus-1-hook-post nexus-2-deploy nexus-2-hook-post
+oc get pod
+hostname
+oc login -u admin https://api.ose4.pk.test:6443
+oc
+oc get nodes
+ll /tmp/pod2
+df -h
+systemctl status httpd
+systemctl status haproxy.service 
+systemctl status dhcpd
+reboot
+ll
+systemctl status haproxy.service 
+systemctl start haproxy.service 
+systemctl status haproxy.service 
+systemctl status httpd
+oc login -u admin https://api.ose4.pk.test:6443
+ll /tmp
+df -h
+oc login -u admin https://api.ose4.pk.test:6443
+ll
+ll /root/bin/
+cd /root/bin/
+ll
+rm oc
+ln -s /root/INSTALL_ALL_CONFIG/ose4.3-install/oc.4.4.3 oc
+ll
+oc
+oc login
+oc login -u admin https://api.ose4.pk.test:6443
+ll
+cd -
+ll
+./oc.4.3.13 login -u admin https://api.ose4.pk.test:6443
+mkdir /tmp/pod2
+./oc.4.3.13 login -u admin https://api.ose4.pk.test:6443
+rm -rf /tmp/pod2
+>/tmp/pod2
+./oc.4.3.13 login -u admin https://api.ose4.pk.test:6443
+oc login -u admin https://api.ose4.pk.test:6443
+oc project per-cicd 
+oc get pod
+ll
+ll /tmp
+ll
+cd CI-CD/
+ll
+vim gogs-template-ephemeral.yaml 
+cd cicd-jenkins/
+ll
+cd gogs/
+ll
+vim gogs-template-ephemeral.yaml 
+ll
+cd ../
+ll
+vim konfiguracja.txt 
+ll
+oc process -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true|oc delete -f -
+./cicd-clear.sh 
+oc get all
+vim konfiguracja.txt 
+oc get sa
+oc describe build
+oc describe sa builder 
+oc describe sa deployer 
+oc describe sa default 
+oc new-app -n per-cicd -f cicd-template.yaml --param DEV_PROJECT=per-dev --param STAGE_PROJECT=per-stage --param EPHEMERAL=true
+oc get pod
+oc logs -f cicd-demo-installer-cv9m4
+oc adm upgrade
+oc get clusterversions.config.openshift.io 
+oc get nodes
+oc get storageclass
+oc get clusterversions.config.openshift.io 
+oc get storageclass
+oc get nodes
+oc get clusterversions.config.openshift.io 
+oc get nodes
+exportfs -a
+exportfs -v
+oc get pv
+oc get pvc -n openshift-image-registry
+oc describe pvc image-registry-pvc -n openshift-image-registry
+oc describe pv image-registry-pv
+oc get pv
+oc get pvc
+oc project per-dev
+oc get pvc
+oc get pv
+ll
+cd ../
+ll
+vim ConsoleCustomization.yaml
+oc create -f ConsoleCustomization.yaml
+cat ConsoleCustomization.yaml
+oc get all
+oc project
+oc project per-cicd
+oc get all
+oc project console
+oc get all -n openshift-console
+oc delete consolelink.console.openshift.io/example-namespace-dashboard
+vim ConsoleCustomization.yaml 
+ssh -i ~/.ssh/bastionKeyNoPass core@10.11.20.74
+ll
+vim GIT.txt 
+cd cicd-jenkins/
+ll
+vim konfiguracja.txt 
+cd
+ll
+cd -
+cd ../../
+ll
+cat login.txt 
+cd CI-CD/cicd-jenkins/
+ll
+vim konfiguracja.txt 
+vim README.md 
+cat ../GIT.txt 
+git add .
+git status
+git commit -m 'Modyfikacja konfiguracja.txt'
+git push origin master
+ll /etc/bash_completion.d/
+ll
+oc get all
+oc login -u admin https://api.ose4.pk.test:6443
+oc project openshift-operators-redhat 
+oc get all
+oc get clusterversions.config.openshift.io 
+oc get clusterserviceversions.operators.coreos.com 
+oc get all
+oc project openshift-operators
+oc get all
+oc get clusterserviceversions.operators.coreos.com 
+oc get all
+oc get clusterserviceversions.operators.coreos.com 
+oc get all
+oc get clusterserviceversions.operators.coreos.com 
+oc get all
+oc get pods -n istio-system -w
+oc get pods -n istio-system 
+oc get pods -n openshift-operator
+oc get pods -n openshift-operators
+oc get pods -n openshift-operators -o wide
+oc get all
+oc get all -n istio-system 
+lll
+ll
+mkdir ISTIO
+ll
+cd ISTIO/
+ll
+echo "export OCP_TUTORIAL_PROJECT=istio-tutor" >> $HOME/.bashrc
+cagt $HOME/.bashrc
+cat $HOME/.bashrc
+source $HOME/.bashrc
+./kubectl api-resources | grep deployment
+./kubectl api-resources | grep network
+cd CI-CD/cicd-jenkins/
+ll
+vim konfiguracja.txt 
+cat gitlab
+cat gitlab.txt 
+cat ../GIT.txt 
+git add .
+git status
+git commit -m 'Modyfikacja konfiguracja.txt'
+git push origin master
+mkdir ~/lab && cd "$_"
+ll
+git clone https://github.com/gpe-mw-training/ocp-service-mesh-foundations
+ll
+cd ocp-service-mesh-foundations/
+ll
+cat README.md
+pwd
+cd catalog
+ll
+oc create -f kubernetes/catalog-service-template.yml -n $OCP_TUTORIAL_PROJECT
+vim kubernetes/Deployment.yml 
+oc create -f kubernetes/catalog-service-template.yml -n $OCP_TUTORIAL_PROJECT
+vim kubernetes/catalog-service-template.yml 
+oc create -f kubernetes/catalog-service-template.yml -n $OCP_TUTORIAL_PROJECT
+oc get all
+oc project istio-tutor 
+oc get all
+kubectl api-resources | grep deployment
+ll
+pwd
+cd ../../../
+ll
+rm -rf lab/
+cat .bash_profile 
+cd /root/INSTALL_ALL_CONFIG/ose4.3-install/
+ll
+cd ISTIO/
+ll
+mkdir lab && cd "$_"
+pwd
+git clone https://github.com/gpe-mw-training/ocp-service-mesh-foundations
+cd ocp-service-mesh-foundations
+cd catalog
+ll
+pwd
+cd /root/INSTALL_ALL_CONFIG/ose4.3-install
+ll
+kubectl api-resources | grep deployment
+./kubectl api-resources | grep deployment
+cd -
+oc get all
+oc logs deployment.apps/catalog-v1
+oc logs deployment.apps/catalog-v1 -c catalog
+oc logs deployment.apps/catalog-v1 -c istio-proxy
+ll
+oc create -f kubernetes/Service.yml 
+vim kubernetes/Service.yml 
+ll
+oc get all
+cd ../partner/
+ll
+ll kubernetes/
+vim kubernetes/partner-service-template.yml 
+cat kubernetes/Deployment.yml 
+vim kubernetes/partner-service-template.yml 
+ll
+oc create -f kubernetes/partner-service-template.yml -n $OCP_TUTORIAL_PROJECT
+oc get all
+oc create -f kubernetes/Service.yml -n $OCP_TUTORIAL_PROJECT
+oc get all
+oc get pods -w
+cd ../gateway/
+ll
+ll kubernetes/
+vim kubernetes/gateway-service-template.yml 
+oc create -f kubernetes/gateway-service-template.yml -n $OCP_TUTORIAL_PROJECT
+oc create -f kubernetes/Service.yml -n $OCP_TUTORIAL_PROJECT
+oc get all
+cat kubernetes/Service.yml 
+ll
+cd ../
+ll
+cd ../
+ll
+echo -en "apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+name: ingress-gateway
+spec:
+selector:
+istio: ingressgateway # use istio default controller
+servers:
+- port:
+number: 80
+name: http
+protocol: HTTP
+hosts:
+- '*'
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+name: ingress-gateway
+spec:
+hosts:
+- '*'
+gateways:
+- ingress-gateway
+http:
+- match:
+- uri:
+exact: /
+route:
+- destination:
+host: gateway
+port:
+number: 8080
+" >service-mesh-gw.yaml
+ll
+vim service-mesh-gw.yaml 
+oc apply -f service-mesh-gw.yaml 
+vim service-mesh-gw.yaml 
+oc apply -f service-mesh-gw.yaml 
+vim service-mesh-gw.yaml 
+vi service-mesh-gw.yaml 
+oc apply -f service-mesh-gw.yaml 
+oc apply -f service-mesh-gw.yaml -n $OCP_TUTORIAL_PROJECT
+vi service-mesh-gw.yaml 
+ll
+cat service-mesh-gw.yaml 
+rm -rf service-mesh-gw.yaml 
+pwd
+ll
+cat service-mesh-gw.yaml 
+oc apply -f service-mesh-gw.yaml -n $OCP_TUTORIAL_PROJECT
+oc get all
+oc get gateway
+oc describe gateway
+oc describe virtualservice
+oc -n istio-system get route istio-ingressgateway -o
+oc -n istio-system get route istio-ingressgateway -o jsonpath='{.spec.host}'
+oc get all
+oc get all -n istio-system 
+echo "export GATEWAY_URL=$(oc -n istio-system get route istio-ingressgateway -o jsonpath='{.spec.host}')" >> ~/.bashrc
+cat ~/.bashrc
+source ~/.bashrc
+echo $GATEWAY_URL
+curl $GATEWAY_URL
+oc get pods
+vim install-procedure.txt 
+cat /root/.ovirt/ovirt-config.yaml
+mv install-procedure.txt ipi-install-procedure.txt 
+ll /ose-nfs/
+ll /ose-nfs/volumeny/
+ll /ose-nfs/volumeny/registry/
+cat /etc/exports.d/ose-nfs-persistent.exports 
+cp /etc/exports.d/ose-nfs-persistent.exports .
+vim ipi-install-procedure.txt 
+mv ipi-install-procedure.txt upi-install-procedure.txt 
+pwd
+cat partner-service-template.yml 
+vim lab-instal.txt
+cat konfiguracja.txt 
+vim lab-instal.txt 
+mv lab-instal.txt LAB-Instal.txt 
+head partner-service-template.yml 
+vim LAB-Instal.txt 
+vim LAB-Instal.txt 
+vim serviceMesh-AWSLab.txt 
+cat GIT.txt 
+vim htaccess-ldap-CustomResource.yaml

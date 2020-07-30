@@ -1,0 +1,41 @@
+;
+$TTL 86400
+@       IN      SOA     example.com.  dns.example.com. (
+                                2019101101      ; Serial
+                                43200           ; Refresh
+                                3600            ; Retry
+                                3600000         ; Expire
+                                2592000 )       ; Minimum
+
+10.168.192.in-addr.arpa.       IN      NS      dns.example.com.
+
+20.10.168.192.in-addr.arpa.    IN      PTR     dns.example.com.
+
+10.10.168.192.in-addr.arpa.    IN      PTR     ose-m1.example.com.
+11.10.168.192.in-addr.arpa.    IN      PTR     ose-m1.example.com.
+12.10.168.192.in-addr.arpa.    IN      PTR     ose-m1.example.com.
+
+13.10.168.192.in-addr.arpa.    IN      PTR     ose-n1.example.com.
+14.10.168.192.in-addr.arpa.    IN      PTR     ose-n2.example.com.
+15.10.168.192.in-addr.arpa.    IN      PTR     ose-n3.example.com.
+
+100.10.168.192.in-addr.arpa.   IN      PTR     master.example.com.
+
+; 17.100.168.192.in-addr.arpa.    IN      PTR     nfs.local.
+
+30.10.168.192.in-addr.arpa.    IN      PTR     ose2-m1.example.com.
+31.10.168.192.in-addr.arpa.    IN      PTR     ose2-i1.example.com.
+32.10.168.192.in-addr.arpa.    IN      PTR     ose2-i2.example.com.
+33.10.168.192.in-addr.arpa.    IN      PTR     ose2-n1.example.com.
+34.10.168.192.in-addr.arpa.    IN      PTR     ose2-n2.example.com.
+35.10.168.192.in-addr.arpa.    IN      PTR     ose2-n3.example.com.
+
+40.10.168.192.in-addr.arpa.    IN      PTR     ose3-m1.example.com.
+41.10.168.192.in-addr.arpa.    IN      PTR     ose3-i1.example.com.
+42.10.168.192.in-addr.arpa.    IN      PTR     ose3-i2.example.com.
+43.10.168.192.in-addr.arpa.    IN      PTR     ose3-n1.example.com.
+44.10.168.192.in-addr.arpa.    IN      PTR     ose3-n2.example.com.
+45.10.168.192.in-addr.arpa.    IN      PTR     ose3-n3.example.com.
+
+55.10.168.192.in-addr.arpa.    IN      PTR     fed-cl1.example.com.
+66.10.168.192.in-addr.arpa.    IN      PTR     fed-cl2.example.com.
