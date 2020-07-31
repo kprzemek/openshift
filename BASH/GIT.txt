@@ -4,6 +4,12 @@ git commit -m 'Modyfikacja konfiguracja.txt'
 git push origin master
 
 ---------
+GIT SYNC z masterem
+---------
+git checkout master
+git pull
+git push origin master - nie potrzebne, bardziej kontrolnie
+
 
 Git global setup
 -----------------
