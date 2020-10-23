@@ -23,7 +23,7 @@ spec:
             - uid
         bindDN: 'uid=przemyslaw.kuznicki,cn=users,cn=accounts,dc=lab,dc=internal'
         bindPassword:
-          name: ldap-bind-password-5sjgc
+          name: ldap-secret
         insecure: true
         url: 'ldap://idm.lab.internal/cn=accounts,dc=lab,dc=internal?uid'
       mappingMethod: claim

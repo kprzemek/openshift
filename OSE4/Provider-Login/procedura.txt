@@ -1,0 +1,7 @@
+Dokumentacja:
+https://docs.openshift.com/container-platform/4.5/authentication/identity_providers/configuring-htpasswd-identity-provider.html
+1) kreujemy htpasswd secret
+2) kreujemy ldap secert
+3) robimy: oc apply -f plik-htpass-ldap.custom.yaml
+4) logujemy sie htpass i ldap. zaloza sie userzy
+   a) oc adm policy add-cluster-role-to-user cluster-admin przemyslaw.kuznicki <|przem|admin>
