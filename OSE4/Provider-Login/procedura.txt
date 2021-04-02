@@ -5,3 +5,18 @@ https://docs.openshift.com/container-platform/4.5/authentication/identity_provid
 3) robimy: oc apply -f plik-htpass-ldap.custom.yaml
 4) logujemy sie htpass i ldap. zaloza sie userzy
    a) oc adm policy add-cluster-role-to-user cluster-admin przemyslaw.kuznicki <|przem|admin>
+
+lub
+ zamiast kreować osobny plik CR można zrobić:
+oc edit oauth
+i w spec wkleic tylko to co w spec w dokumentcji ;-)
+spec:
+  identityProviders:
+  - name: przem_htpasswd_provider 
+    challenge: true 
+    login: true 
+    mappingMethod: claim 
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: htpass-secret
