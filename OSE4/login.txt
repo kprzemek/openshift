@@ -1,0 +1,14 @@
+INFO Install complete!                            
+INFO To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/root/INSTALL_ALL_CONFIG/ose4.3-install/install-cl/auth/kubeconfig' 
+INFO Access the OpenShift web-console here: https://console-openshift-console.apps.ose4.pk.test 
+INFO Login to the console with user: kubeadmin, password: A4rZT-FhKk7-atcuo-3cIjR 
+
+oc login -u admin https://api.ose4.pk.test:6443
+admin/przem
+
+RHVOSE:
+INFO Install complete!                            
+INFO To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/root/INSTALL_ALL_CONFIG/ose4.3-install/install-rhv/auth/kubeconfig' 
+INFO Access the OpenShift web-console here: https://console-openshift-console.apps.rhvose.pk.test 
+INFO Login to the console with user: kubeadmin, password: 5JFWu-Yoppu-rgYQD-A58uQ 
+oc login -u system:admin https://api.rhvose.pk.test:6443

@@ -1,0 +1,16 @@
+/var/www/html/media
+razem 1770668
+-rw-r--r--. 1 root root        20 09-16 13:09 apache-media-upi.txt
+-rw-r--r--. 1 root root      1917 2020-05-22  boot_4.3.ipxe
+-rw-r--r--. 1 root root      1917 2020-05-22  boot_4.4.ipxe
+-rw-r--r--. 1 root root      1917 2020-05-22  boot.ipxe
+-rw-r--r--. 1 root root      1832 2020-05-22  boot.ipxe.org
+-rw-r--r--. 1 root root    294091 2020-06-01  bootstrap.ign
+-rw-r--r--. 1 root root      1817 2020-06-01  master.ign
+-rw-r--r--. 1 root root  71105367 2020-05-22  rhcos-4.3.8-x86_64-installer-initramfs.x86_64.img
+-rw-r--r--. 1 root root   8106848 2020-05-22  rhcos-4.3.8-x86_64-installer-kernel-x86_64
+-rw-r--r--. 1 root root 803561085 2020-05-22  rhcos-4.3.8-x86_64-metal.x86_64.raw.gz
+-rw-r--r--. 1 root root  71721043 2020-05-22  rhcos-4.4.3-x86_64-installer-initramfs.x86_64.img
+-rw-r--r--. 1 root root   8110944 2020-05-22  rhcos-4.4.3-x86_64-installer-kernel-x86_64
+-rw-r--r--. 1 root root 850222544 2020-05-22  rhcos-4.4.3-x86_64-metal.x86_64.raw.gz
+-rw-r--r--. 1 root root      1817 2020-06-01  worker.ign

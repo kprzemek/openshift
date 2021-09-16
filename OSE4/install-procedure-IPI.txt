@@ -1,0 +1,55 @@
+./openshift-install create install-config --dir=install-rhvocp
+
+Odpowiadamy na pytania.
+Jeśli raz zalogujemy się do RHV to w katalogu domowym mamy .ovirt i tam konfig, po którym loguje się za kazdym razem. Nie trzeba tego powtarzać.
+Edytujemy (jesli chcemy) plik w katalogu install-rhvose i zmieniamy ilość worker/master. Lub dopisujemy jakie chcemy powołać maczyny np:
+apiVersion: v1
+baseDomain: example.com
+controlPlane:
+  name: master
+  platform:
+    ovirt:
+      cpu:
+        cores: 4
+        sockets: 2
+      memoryMB: 65536
+      osDisk:
+        sizeGB: 100
+      vmType: high_performance
+  replicas: 3
+compute:
+- name: worker
+  platform:
+    ovirt:
+      cpu:
+        cores: 4
+        sockets: 4
+      memoryMB: 65536
+      osDisk:
+        sizeGB: 200
+      vmType: high_performance
+  replicas: 5
+metadata:
+  name: test-cluster
+platform:
+  ovirt:
+    api_vip: 10.46.8.230
+    ingress_vip: 10.46.8.232
+    ovirt_cluster_id: 68833f9f-e89c-4891-b768-e2ba0815b76b
+    ovirt_storage_domain_id: ed7b0f4e-0e96-492a-8fff-279213ee1468
+    ovirt_network_name: ovirtmgmt
+    vnicProfileID: 3fa86930-0be5-4052-b667-b79f0a729692
+pullSecret: '{"auths": ...}'
+sshKey: ssh-ed25519 AAAA...
+
+./openshift-install --dir=install-rhvocp create cluster --log-level=debug  (info,warn,error)
+Pobiera obraz wirtualki z sieci:
+INFO Obtaining RHCOS image file from 'https://releases-art-rhcos.svc.ci.openshift.org/art/storage/releases/rhcos-4.5/45.82.202008010929-0/x86_64/rhcos-45.82.202008010929-0-openstack.x86_64.qcow2.gz?sha256=036a497599863d9470d2ca558cca3c4685dac06243709afde40ad008dce5a8ac' 
+w wersji UPI sami musimy go dostarczyć do RHV!!
+
+API at https://api.rhvose.pk.test:6443
+
+export KUBECONFIG=/root/INSTALL_ALL_CONFIG/ose4.3-install/install-rhvocp/auth/kubeconfig
+
+Konsola WWW:
+https://console-openshift-console.apps.rhvose.pk.test
