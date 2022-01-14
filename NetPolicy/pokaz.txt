@@ -1,0 +1,19 @@
+8. NetworkPolicy
+Dwa projekty:
+    1. net-policy1 label namespace name=network1
+    2. net-policy2 label namespace name=network2
+	Trzy przykładowe policy:
+    1. deny-all
+    2. allow-ns-all
+    3. allow-ns-spec
+
+Przebieg:
+    1. w net-policy1 powołujemy 2 aplikacje: hello i sample
+       oc new-app --name sample/hello --docker-image  quay.io/redhattraining/hello-world-nginx:v1.0
+    2. w net-policy2 powołujemy 1 aplikację: test
+       oc new-app --name test --docker-image  quay.io/redhattraining/hello-world-nginx:v1.0
+    3. z poda hello robimy curl http://ip_pod_test:8080
+    4. w net-policy2 po kolei aplikujemy po jednej policy i pokazujemy
+       zmieniamy poda na sample dla policy specyfic.
+    5. można pokazać stakowanie allow, że zadziała pierwsza
+    6. Jak zrobić EGRES z namespace??? https://docs.openshift.com/container-platform/4.6/networking/openshift_sdn/configuring-egress-firewall.html
