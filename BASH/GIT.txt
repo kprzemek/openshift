@@ -48,6 +48,7 @@ git push -u origin --all
 git push -u origin --tags
 
 REPO i wszystkie BRANCHES
+-------------------------
 git clone https://github.com/OpenShiftDemos/openshift-tasks.git
 cd openshift-tasks/
 git fetch origin
@@ -65,9 +66,21 @@ W projekcie -> settings->repository wybieramy Deploy Toekn i wypelniamy formatke
 
 Deploy tokens allow access to packages, your repository, and registry images.
 Your New Deploy Token
-Use this username as a login: przemyslaw.kuznicki
-Use this token as a password: ZGNviZ7ivesfHMN83tYW
+Use this username as a login: przemyslaw.kuznicki (gitLAB)
+Use this token as a password: Z$%^#&???XXXX <- token w KeePass
 
 Allows read-only access to the registry images,
 Allows read access to the package registry
 
+Migracja repo pomiedzy GitLAB < -- > GitHUB
+------------------------------------
+if you share the same idea and look for a simple way to migrate a repo from Bitbucket or GitLab, the followings are several simple steps to accomplish this.
+
+1) Inside your GitHub team page, create an empty private repo with the same name of Bitbucket/GitLab repo that you want to transfer.
+2) Copy your newly created repo link, either in HTTPS or SSH. For example, git@github.com:team-name/repo-name.git (SSH type)
+3) Inside your local project folder, change the remote URL under.git/config ‘s file to your copied GitHub's one. The content looks similar as follows. [remote "origin"]
+    url = git@github.com:team-name/repo-name.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+4) Do a git push: git push --all . It will push all codes and commit history on your newly GitHub repository.
+5) Done. After that, when we push new commits, it will push to GitHub only.
+6) The Bitbucket/GitLab repo now can be archived to ‘Read-only’ mode.
