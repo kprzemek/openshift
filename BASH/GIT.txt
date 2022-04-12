@@ -84,3 +84,20 @@ if you share the same idea and look for a simple way to migrate a repo from Bitb
 4) Do a git push: git push --all . It will push all codes and commit history on your newly GitHub repository.
 5) Done. After that, when we push new commits, it will push to GitHub only.
 6) The Bitbucket/GitLab repo now can be archived to ‘Read-only’ mode.
+
+==========
+…or create a new repository on the command line
+
+echo "# vmware-ocp" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/kprzemek/vmware-ocp.git
+git push -u origin main
+
+…or push an existing repository from the command line
+
+git remote add origin https://github.com/kprzemek/vmware-ocp.git
+git branch -M main
+git push -u origin main
